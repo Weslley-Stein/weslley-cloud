@@ -3,7 +3,7 @@ terraform {
     bucket = "weslley-cloud-terraform"
     key = "terraform/state"
     region = "us-east-1"
-    dynamodb_table = "weslle-cloud-lock-id"
+    dynamodb_table = "weslley-cloud-lock-id"
   }
   required_providers {
     aws = {
