@@ -10,17 +10,17 @@ data "aws_ami" "ubuntu-22-04" {
 
   filter {
     name   = "architecture"
-    values = [x86_64]
+    values = ["x86_64"]
   }
 
   filter {
     name   = "virtualization-type"
-    values = [hvm]
+    values = ["hvm"]
   }
 
 }
 
-resource "aws_ec2_instance" "main" {
+resource "aws_instance" "main" {
   ami = data.aws_ami.ubuntu-22-04
   instance_type = var.instance_type
 }

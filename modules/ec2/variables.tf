@@ -8,7 +8,7 @@ variable "region" {
   }
 }
 
-variable "allowed_instances_size" {
+variable "allowed_instance_size" {
   description = "Instance allowed to be provided"
   type = list(string)
   default = ["nano","micro","small"]
@@ -19,7 +19,7 @@ variable "instance_type" {
   type = string
   default = "t3.micro"
   validation {
-    condition = [for size in var.allowd_instances_sizes : strcontains(var.instance_type, size)]
+    condition = [for size in var.allowed_instance_size : strcontains(var.instance_type, size)]
     error_message = "That instance is too big!"
   }
 }
