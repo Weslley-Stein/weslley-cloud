@@ -1,5 +1,4 @@
 data "aws_ami" "ubuntu-22-04" {
-  region      = var.region
   most_recent = true
   owners = ["099720109477"]
 
