@@ -10,16 +10,16 @@ variable "region" {
 
 variable "allowed_instance_size" {
   description = "Instance allowed to be provided"
-  type = list(string)
-  default = ["nano","micro","small"]
+  type        = list(string)
+  default     = ["nano", "micro", "small"]
 }
 
 variable "instance_type" {
   description = "EC2 instance family and model"
-  type = string
-  default = "t3.micro"
+  type        = string
+  default     = "t3.micro"
   validation {
-    condition = [for size in var.allowed_instance_size : strcontains(var.instance_type, size)]
+    condition     = contains([for size in var.allowed_instance_size : strcontains(var.instance_type, size)])
     error_message = "That instance is too big!"
   }
 }
