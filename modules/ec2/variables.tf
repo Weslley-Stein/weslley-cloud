@@ -19,7 +19,7 @@ variable "instance_type" {
   type        = string
   default     = "t3.micro"
   validation {
-    condition     = contains([for size in var.allowed_instance_size : strcontains(var.instance_type, size)])
+    condition     = contains([for size in var.allowed_instance_size : strcontains(var.instance_type, size)], true)
     error_message = "That instance is too big!"
   }
 }
