@@ -3,7 +3,7 @@ variable "region" {
   type = string
   default = "us-east-1"
   validation {
-    condition = !var.region == "sa-east-1"
+    condition = contains("sa-east-",var.region)
     error_message = "You are lost in the sauce bruh"
   }
 }
