@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket = var.bucket_tf_state
+    bucket = "weslley-cloud-terraform"
     key = "terraform/state"
-    region = var.region
-    dynamodb_table = var.ddb_lock_id
+    region = "us-east-1"
+    dynamodb_table = "weslle-cloud-lock-id"
   }
   required_providers {
     aws = {
