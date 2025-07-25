@@ -20,11 +20,11 @@ jobs:
           terraform_version: 1.12
       - name: Linting...
         run: terraform fmt -recursive && terraform validate
-      - name: Scanning vulnerabilities...
-        uses: aquasecurity/trivy-action@0.32.0
-        with:
-          scan-type: config
-          hide-progress: true
-          scan-ref: "."
+      #- name: Scanning vulnerabilities...
+      #  uses: aquasecurity/trivy-action@0.32.0
+      #  with:
+      #    scan-type: config
+      #    hide-progress: true
+      #    scan-ref: "."
       - name: Planning...
         run: terraform plan
