@@ -29,10 +29,9 @@ module "dns" {
   domain = "weslley.cloud"
   records = [
     {
-      "weslley.cloud" = {
-        type    = "A"
-        records = [module.ec2.instance_public_ip]
-      }
+      record_name = "weslley.cloud"
+      type        = "A"
+      records     = [module.ec2.instance_public_ip]
     }
   ]
 }
