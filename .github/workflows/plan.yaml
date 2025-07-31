@@ -23,11 +23,17 @@ jobs:
         run: terraform init
       - name: Linting...
         run: terraform fmt -recursive && terraform validate
+      - name: Planning...
+        run: terraform plan
+  tests:
+    runs-on: ubuntu-latest
+    environment: main
+    steps:
       - name: Scanning vulnerabilities...
         uses: aquasecurity/trivy-action@0.32.0
         with:
           scan-type: config
           hide-progress: true
           scan-ref: "."
-      - name: Planning...
-        run: terraform plan
+      - name: Terraform tests...
+        run: terraform test
