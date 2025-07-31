@@ -10,7 +10,7 @@ variable "domain" {
 
 variable "records" {
   description = "All records within the hosted zone"
-  type        = list(map)
+  type        = list(map(string))
   # "record_name" = {
   #   type = ""
   #   records = [""]
