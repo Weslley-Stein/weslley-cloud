@@ -29,5 +29,5 @@ jobs:
           scan-type: config
           hide-progress: true
           scan-ref: "."
-      - name: Planning...
+      - name: Applying...
         run: terraform apply -auto-approve
