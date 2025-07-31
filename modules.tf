@@ -22,3 +22,17 @@ module "ec2" {
     }
   ]
 }
+
+module "dns" {
+  source = "./modules/route53"
+  vpc_id = "vpc-0bea2169ef5068588"
+  domain = "weslley.cloud"
+  records = [
+    {
+      "weslley.cloud" = {
+        type    = "A"
+        records = [module.ec2.instance_public_ip]
+      }
+    }
+  ]
+}
