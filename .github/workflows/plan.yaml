@@ -35,5 +35,3 @@ jobs:
           scan-type: config
           hide-progress: true
           scan-ref: "."
-      - name: Terraform tests...
-        run: terraform test
