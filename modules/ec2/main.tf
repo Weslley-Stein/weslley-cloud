@@ -36,9 +36,9 @@ resource "aws_security_group" "main" {
   dynamic "ingress" {
     for_each = var.allowed_ports
     content {
-      from_port   = each.from_port
-      to_port     = each.to_port
-      protocol    = each.protol
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
       cidr_blocks = ["0.0.0.0/0"]
     }
   }
