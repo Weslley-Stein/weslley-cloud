@@ -17,4 +17,5 @@ resource "aws_route53_record" "main" {
   name    = each.value.record_name
   type    = each.value.type
   records = each.value.records
+  ttl     = 300
 }
