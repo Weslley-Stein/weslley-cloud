@@ -1,12 +1,5 @@
-data "aws_vpc" "main" {
-  id = var.vpc_id
-}
-
 resource "aws_route53_zone" "main" {
   name = var.domain
-  vpc {
-    vpc_id = data.aws_vpc.main.id
-  }
 }
 
 resource "aws_route53_record" "main" {
