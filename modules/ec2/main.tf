@@ -31,7 +31,7 @@ resource "aws_key_pair" "main" {
 }
 
 resource "aws_security_group" "main" {
-  name = "sg-${local.project_name}-main"
+  name = "${local.project_name}-main"
 
   dynamic "ingress" {
     for_each = var.allowed_ports
