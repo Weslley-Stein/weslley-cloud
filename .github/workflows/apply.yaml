@@ -30,4 +30,4 @@ jobs:
           hide-progress: true
           scan-ref: "."
       - name: Planning...
-        run: terraform apply
+        run: terraform apply -auto-approve
