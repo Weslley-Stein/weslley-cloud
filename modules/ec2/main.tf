@@ -68,7 +68,7 @@ resource "aws_instance" "main" {
 resource "aws_eip" "main" {
   instance = aws_instance.main.id
   tags = {
-    Name = "${local.project_name}"
+    Name = "weslley.cloud"
   }
 }
 
