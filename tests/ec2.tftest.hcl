@@ -1,5 +1,5 @@
 test {
-  parellel = true
+  parallel = true
 }
 
 variables {
