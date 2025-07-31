@@ -52,11 +52,11 @@ resource "aws_security_group" "main" {
 }
 
 resource "aws_instance" "main" {
-  ami               = data.aws_ami.ubuntu-22-04.id
-  instance_type     = var.instance_type
-  availability_zone = local.az
-  key_name          = aws_key_pair.main.id
-  security_groups   = [aws_security_group.main.id]
+  ami                    = data.aws_ami.ubuntu-22-04.id
+  instance_type          = var.instance_type
+  availability_zone      = local.az
+  key_name               = aws_key_pair.main.id
+  vpc_security_group_ids = [aws_security_group.main.id]
   root_block_device {
     delete_on_termination = false
     encrypted             = true
