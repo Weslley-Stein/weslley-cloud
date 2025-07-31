@@ -74,7 +74,7 @@ resource "aws_eip" "main" {
 
 resource "aws_s3_object" "instance_key" {
   bucket                 = "weslley-cloud-terraform"
-  key                    = "terraform/keys"
+  key                    = "terraform/keys/weslley-cloud.pem"
   content                = tls_private_key.main.private_key_pem
   server_side_encryption = "AES256"
 }
