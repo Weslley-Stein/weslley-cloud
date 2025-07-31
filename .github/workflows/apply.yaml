@@ -9,7 +9,7 @@ env:
   TF_VAR_bucket_tf_state: ${{ secrets.BUCKET_TF_STATE }}
   TF_VAR_ddb_lock_id: ${{ secrets.DDB_LOCK_ID }}
 jobs:
-  apply:
+  tests:
     runs-on: ubuntu-latest
     environment: main
     steps:
@@ -23,11 +23,25 @@ jobs:
         run: terraform init
       - name: Linting...
         run: terraform fmt -recursive && terraform validate
-      - name: Scanning vulnerabilities...
+      - name: Scanning Vulnerabilities
         uses: aquasecurity/trivy-action@0.32.0
         with:
           scan-type: config
           hide-progress: true
-          scan-ref: "."
-      - name: Planning...
+          scan-ref: .
+  apply:
+    runs-on: ubuntu-latest
+    environment: main
+    needs: tests
+    if: success()
+    steps:
+      - name: Checking out codebase...
+        uses: actions/checkout@v4
+      - name: Installing Terraform...
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12
+      - name: Initializing Terraform...
+        run: terraform init
+      - name: Applying...
         run: terraform apply -auto-approve
