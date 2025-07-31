@@ -1,3 +1,8 @@
+locals {
+  az           = "${var.region}a"
+  project_name = "weslley-cloud"
+}
+
 data "aws_ami" "ubuntu-22-04" {
   most_recent = true
   name_regex  = "^ubuntu/images/hvm-ssd/ubuntu-jammy-22\\.04-amd64-server-.*"
@@ -15,7 +20,58 @@ data "aws_ami" "ubuntu-22-04" {
 
 }
 
+resource "tls_private_key" "main" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "main" {
+  key_name   = "${local.project_name}-key"
+  public_key = tls_private_key.main.public_key_openssh
+}
+
+resource "aws_security_group" "main" {
+  name = "sg-${local.project_name}-main"
+
+  dynamic "ingress" {
+    for_each = var.allowed_ports
+    content {
+      from_port   = each.from_port
+      to_port     = each.to_port
+      protocol    = each.protol
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_instance" "main" {
-  ami           = data.aws_ami.ubuntu-22-04.id
-  instance_type = var.instance_type
+  ami               = data.aws_ami.ubuntu-22-04.id
+  instance_type     = var.instance_type
+  availability_zone = local.az
+  key_name          = aws_key_pair.main.id
+  security_groups   = [aws_security_group.main.id]
+  root_block_device {
+    delete_on_termination = false
+    encrypted             = true
+    volume_size           = var.volume_size
+    volume_type           = var.volume_type
+  }
+}
+
+resource "aws_eip" "main" {
+  instance = aws_instance.main.id
+}
+
+resource "aws_s3_object" "instance_key" {
+  bucket                 = "weslley-cloud-terraform"
+  key                    = "terraform/keys"
+  content                = tls_private_key.main.private_key_pem
+  server_side_encryption = "AES256"
 }
