@@ -8,7 +8,7 @@ module "ec2" {
     {
       from_port = "443"
       to_port   = "443"
-      procotol  = "tcp"
+      protocol  = "tcp"
     },
     {
       from_port = "80"
