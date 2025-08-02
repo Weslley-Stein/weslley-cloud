@@ -44,4 +44,16 @@ jobs:
       - name: Initializing Terraform...
         run: terraform init
       - name: Planning...
-        run: terraform plan
+        run: terraform plan -out plan
+  push_state:
+    runs-on: ubuntu-latest
+    environment: main
+    needs: plan
+    if: success()
+    steps:
+      - name: Checking out codebase...
+        uses: actions/checkout@v4
+      - name: Authenticate to AWS...
+        uses: aws-actions/configure-aws-credentials@v4.2.1
+      - name: List buckets...
+        run: aws s3 ls
