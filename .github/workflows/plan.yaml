@@ -45,6 +45,11 @@ jobs:
         run: terraform init
       - name: Planning...
         run: terraform plan -out plan
+      - name: Uploading artifacts...
+        uses: action/upload-artifact@4.6.2
+        with:
+          name: plan
+          path: ./plan
   push_plan:
     runs-on: ubuntu-latest
     environment: main
@@ -53,6 +58,11 @@ jobs:
     steps:
       - name: Checking out codebase...
         uses: actions/checkout@v4
+      - name: Downloading artifacts...
+        uses: actions/download-artifact@4.3.0
+        with:
+          name: plan
+          path: ./plan
       - name: Authenticate to AWS...
         uses: aws-actions/configure-aws-credentials@v4.2.1
         with:
