@@ -1,6 +1,7 @@
 module "ec2" {
   source        = "./modules/ec2"
   region        = var.region
+  instance_ami  = var.ec2_instance_ami
   instance_type = var.ec2_instance_type
   volume_size   = var.ec2_volume_size
   volume_type   = var.ec2_volume_type

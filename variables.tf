@@ -8,6 +8,11 @@ variable "region" {
   }
 }
 
+variable "ec2_instance_ami" {
+  description = "ami id for the ec2 instance."
+  type        = string
+}
+
 variable "ec2_instance_type" {
   description = "Instance type for the server."
   type        = string

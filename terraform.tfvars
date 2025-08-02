@@ -1,5 +1,7 @@
 region = "us-east-1"
 
+ec2_instance_ami = "ami-09ac0b140f63d3458"
+
 ec2_instance_type = "t3.small"
 
 ec2_volume_size = 30

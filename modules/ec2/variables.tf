@@ -16,6 +16,11 @@ variable "allowed_instance_size" {
   default     = ["nano", "micro", "small"]
 }
 
+variable "instance_ami" {
+  description = "ami id for the ec2 instance."
+  type        = string
+}
+
 variable "instance_type" {
   description = "EC2 instance family and model"
   type        = string
