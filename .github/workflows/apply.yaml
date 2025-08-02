@@ -29,14 +29,36 @@ jobs:
           scan-type: config
           hide-progress: true
           scan-ref: .
-  apply:
+  pull_plan:
     runs-on: ubuntu-latest
     environment: main
     needs: tests
     if: success()
     steps:
+      - name: Authenticate to AWS...
+        uses: aws-actions/configure-aws-credentials@4.2.1
+        with:
+          aws-region: "us-east-1"
+      - name: Pull plan file from bucket...
+        run: aws s3 cp s3://$TF_VAR_bucket_tf_state/plan.bin plan.bin
+      - name: Uploading artifact...
+        uses: actions/upload-artifact@4.6,2
+        with:
+          name: plan
+          path: plan.bin
+  apply:
+    runs-on: ubuntu-latest
+    environment: main
+    needs: pull_paln
+    if: success()
+    steps:
       - name: Checking out codebase...
         uses: actions/checkout@v4
+      - name: Downloading artifacts...
+        uses: actions/download-artifact@4.3.0
+        with:
+          name: plan
+          path: .
       - name: Installing Terraform...
         uses: hashicorp/setup-terraform@v3
         with:
@@ -44,4 +66,4 @@ jobs:
       - name: Initializing Terraform...
         run: terraform init
       - name: Applying...
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve plan.bin
