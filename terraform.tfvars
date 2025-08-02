@@ -33,7 +33,7 @@ dns_records = [
     records     = [""]
   },
   {
-    record_name = "n8n.${output.dns_root_domain}"
+    record_name = "n8n.weslley.cloud"
     type        = "A"
     records     = [""]
   }
