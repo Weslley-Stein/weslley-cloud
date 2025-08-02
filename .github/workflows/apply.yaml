@@ -36,7 +36,7 @@ jobs:
     if: success()
     steps:
       - name: Authenticate to AWS...
-        uses: aws-actions/configure-aws-credentials@4.2.1
+        uses: aws-actions/configure-aws-credentials@v4.2.1
         with:
           aws-region: "us-east-1"
       - name: Pull plan file from bucket...
