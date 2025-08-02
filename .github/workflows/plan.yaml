@@ -62,7 +62,7 @@ jobs:
         uses: actions/download-artifact@4.3.0
         with:
           name: plan
-          path: plan.bin
+          path: .
       - name: Authenticate to AWS...
         uses: aws-actions/configure-aws-credentials@v4.2.1
         with:
