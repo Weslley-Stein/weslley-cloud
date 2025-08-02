@@ -49,7 +49,7 @@ jobs:
   apply:
     runs-on: ubuntu-latest
     environment: main
-    needs: pull_paln
+    needs: pull_plan
     if: success()
     steps:
       - name: Checking out codebase...
