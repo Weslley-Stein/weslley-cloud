@@ -44,12 +44,12 @@ jobs:
       - name: Initializing Terraform...
         run: terraform init
       - name: Planning...
-        run: terraform plan -out=plan
+        run: terraform plan -out=plan.bin
       - name: Uploading artifacts...
         uses: actions/upload-artifact@4.6.2
         with:
           name: plan
-          path: plan
+          path: plan.bin
   push_plan:
     runs-on: ubuntu-latest
     environment: main
@@ -62,10 +62,10 @@ jobs:
         uses: actions/download-artifact@4.3.0
         with:
           name: plan
-          path: plan
+          path: plan.bin
       - name: Authenticate to AWS...
         uses: aws-actions/configure-aws-credentials@v4.2.1
         with:
           aws-region: "us-east-1"
       - name: Push plan file to bucket...
-        run: aws s3 cp plan s3://$TF_VAR_bucket_tf_state/plan
+        run: aws s3 cp plan s3://$TF_VAR_bucket_tf_state/plan.bin
