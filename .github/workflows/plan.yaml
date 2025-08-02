@@ -46,7 +46,7 @@ jobs:
       - name: Planning...
         run: terraform plan -out plan
       - name: Uploading artifacts...
-        uses: action/upload-artifact@4.6.2
+        uses: actions/upload-artifact@4.6.2
         with:
           name: plan
           path: ./plan
