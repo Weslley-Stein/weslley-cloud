@@ -45,7 +45,7 @@ jobs:
         run: terraform init
       - name: Planning...
         run: terraform plan -out plan
-  push_state:
+  push_plan:
     runs-on: ubuntu-latest
     environment: main
     needs: plan
@@ -57,5 +57,5 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4.2.1
         with:
           aws-region: "us-east-1"
-      - name: List buckets...
-        run: aws s3 ls
+      - name: Push plan file to bucket...
+        run: aws s3 cp plan s3://$TF_VAR_bucket_tf_state/plan
