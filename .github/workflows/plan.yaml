@@ -68,4 +68,4 @@ jobs:
         with:
           aws-region: "us-east-1"
       - name: Push plan file to bucket...
-        run: aws s3 cp plan s3://$TF_VAR_bucket_tf_state/plan.bin
+        run: aws s3 cp plan.bin s3://$TF_VAR_bucket_tf_state/plan.bin
