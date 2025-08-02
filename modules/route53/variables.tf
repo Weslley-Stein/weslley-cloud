@@ -1,8 +1,3 @@
-variable "vpc_id" {
-  description = "ID of the vpc that the hosted zone will be attached to"
-  type        = string
-}
-
 variable "domain" {
   description = "Root domain for the project"
   type        = string
@@ -15,4 +10,9 @@ variable "records" {
     type        = string
     records     = list(string)
   }))
+}
+
+variable "server_ip" {
+  description = "Server Public IP"
+  type        = string
 }

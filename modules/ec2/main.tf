@@ -3,22 +3,22 @@ locals {
   project_name = "weslley-cloud"
 }
 
-data "aws_ami" "ubuntu-22-04" {
-  most_recent = true
-  name_regex  = "^ubuntu/images/hvm-ssd/ubuntu-jammy-22\\.04-amd64-server-.*"
-  owners      = ["099720109477"]
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-}
+#data "aws_ami" "ubuntu-22-04" {
+#  most_recent = true
+#  name_regex  = "^ubuntu/images/hvm-ssd/ubuntu-jammy-22\\.04-amd64-server-.*"
+#  owners      = ["099720109477"]
+#
+#  filter {
+#    name   = "architecture"
+#    values = ["x86_64"]
+#  }
+#
+#  filter {
+#    name   = "virtualization-type"
+#    values = ["hvm"]
+#  }
+#
+#}
 
 resource "tls_private_key" "main" {
   algorithm = "RSA"
@@ -52,7 +52,7 @@ resource "aws_security_group" "main" {
 }
 
 resource "aws_instance" "main" {
-  ami                    = data.aws_ami.ubuntu-22-04.id
+  ami                    = var.instance_ami
   instance_type          = var.instance_type
   availability_zone      = local.az
   key_name               = aws_key_pair.main.id

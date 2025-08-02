@@ -9,6 +9,6 @@ resource "aws_route53_record" "main" {
   zone_id = aws_route53_zone.main.id
   name    = each.value.record_name
   type    = each.value.type
-  records = each.value.records
+  records = length(each.value.records) == 1 && each.value.records[0] == "" ? [var.server_ip] : each.value.records
   ttl     = 300
 }
