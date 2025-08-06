@@ -46,6 +46,6 @@ variable "dns_records" {
   type = list(object({
     record_name = string
     type        = string
-    records     = list(string)
+    records     = optional(list(string), [""])
   }))
 }

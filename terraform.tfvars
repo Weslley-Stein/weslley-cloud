@@ -38,5 +38,10 @@ dns_records = [
     record_name = "n8n.weslley.cloud"
     type        = "A"
     records     = [""]
+  },
+  {
+    record_name = "status.weslley.cloud"
+    type        = "A"
+    records     = [""]
   }
 ]
