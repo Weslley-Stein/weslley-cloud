@@ -19,12 +19,12 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.12
-      - name: Changing directory...
-        run: cd iac/
       - name: Initializing Terraform...
         run: terraform init
+        working-directory: iac/
       - name: Linting...
         run: terraform fmt -recursive && terraform validate
+        working-directory: iac/
       - name: Scanning vulnerabilities...
         uses: aquasecurity/trivy-action@0.32.0
         with:
@@ -43,12 +43,12 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.12
-      - name: Changing directory...
-        run: cd iac/
       - name: Initializing Terraform...
         run: terraform init
+        working-directory: iac/
       - name: Planning...
-        run: ls -l && terraform plan -out=plan.bin
+        run: terraform plan -out=plan.bin
+        working-directory: iac/
       - name: Uploading artifacts...
         uses: actions/upload-artifact@4.6.2
         with:
@@ -62,8 +62,6 @@ jobs:
     steps:
       - name: Checking out codebase...
         uses: actions/checkout@v4
-      - name: Changing directory...
-        run: cd iac/
       - name: Downloading artifacts...
         uses: actions/download-artifact@4.3.0
         with:
@@ -75,3 +73,4 @@ jobs:
           aws-region: "us-east-1"
       - name: Push plan file to bucket...
         run: aws s3 cp plan.bin s3://$TF_VAR_bucket_tf_state/plan.bin
+        working-directory: iac/
