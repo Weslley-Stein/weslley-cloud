@@ -19,6 +19,8 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.12
+      - name: Changing directory...
+        run: cd iac/
       - name: Initializing Terraform...
         run: terraform init
       - name: Linting...
@@ -28,7 +30,7 @@ jobs:
         with:
           scan-type: config
           hide-progress: true
-          scan-ref: .
+          scan-ref: iac/
   pull_plan:
     runs-on: ubuntu-latest
     environment: main
@@ -39,13 +41,15 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4.2.1
         with:
           aws-region: "us-east-1"
+      - name: Changing directory...
+        run: cd iac
       - name: Pull plan file from bucket...
         run: aws s3 cp s3://$TF_VAR_bucket_tf_state/plan.bin plan.bin
       - name: Uploading artifact...
         uses: actions/upload-artifact@4.6.2
         with:
           name: plan
-          path: plan.bin
+          path: iac/plan.bin
   apply:
     runs-on: ubuntu-latest
     environment: main
@@ -54,11 +58,13 @@ jobs:
     steps:
       - name: Checking out codebase...
         uses: actions/checkout@v4
+      - name: Changing directory...
+        run: cd iac/
       - name: Downloading artifacts...
         uses: actions/download-artifact@4.3.0
         with:
           name: plan
-          path: .
+          path: iac/
       - name: Installing Terraform...
         uses: hashicorp/setup-terraform@v3
         with:
