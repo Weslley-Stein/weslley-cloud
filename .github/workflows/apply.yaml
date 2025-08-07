@@ -42,8 +42,7 @@ jobs:
         with:
           aws-region: "us-east-1"
       - name: Pull plan file from bucket...
-        run: aws s3 cp s3://$TF_VAR_bucket_tf_state/plan.bin plan.bin
-        working-directory: iac/
+        run: aws s3 cp s3://$TF_VAR_bucket_tf_state/plan.bin iac/plan.bin
       - name: Uploading artifact...
         uses: actions/upload-artifact@4.6.2
         with:
